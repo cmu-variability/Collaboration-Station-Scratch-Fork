@@ -17,9 +17,20 @@ import styles from './index.css';
 // Register "base" page view
 analytics.pageview('/');
 
+
+
 const appTarget = document.createElement('div');
 appTarget.className = styles.app;
 document.body.appendChild(appTarget);
+
+
+
+
+
+
+
+
+
 
 if (supportedBrowser()) {
     // require needed here to avoid importing unsupported browser-crashing code
@@ -31,5 +42,7 @@ if (supportedBrowser()) {
     const WrappedBrowserModalComponent = AppStateHOC(BrowserModalComponent, true /* localesOnly */);
     const handleBack = () => {};
     // eslint-disable-next-line react/jsx-no-bind
+    interactBackend();
     ReactDOM.render(<WrappedBrowserModalComponent onBack={handleBack} />, appTarget);
+    
 }
