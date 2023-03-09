@@ -7,6 +7,8 @@ import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
 import log from '../lib/log.js';
 import { io } from "socket.io-client";
+import{ useSearchParams} from "react-router-dom";
+
 
 const onClickLogo = () => {
     window.location = 'https://scratch.mit.edu';
@@ -24,13 +26,43 @@ const handleTelemetryModalOptOut = () => {
     log('User opted out of telemetry');
 };
 
+
+
+
 /*
  * Render the GUI playground. This is a separate function because importing anything
  * that instantiates the VM causes unsupported browsers to crash
  * {object} appTarget - the DOM element to render to
  */
-export default appTarget => {
-    GUI.setAppElement(appTarget);
+const Project = () => {
+    let socket = io("http://localhost:8000/", {
+        withCredentials: true,
+        extraHeaders: {
+          "my-custom-header": "abcd"
+        }
+      });
+
+    const [searchParams] = useSearchParams();
+    let room = searchParams.get("id");
+
+    socket.emit('joinRoom', room);
+    socket.emit('requestRoom');
+
+    socket.on('giveRoom', function(rooms) {
+        let title = document.getElementById("title");
+        title.textContent = rooms[1];
+    });
+
+    socket.on('newPerson', function(clientArr) {
+        let people = document.getElementById('people_list');
+        people.innerHTML = '';
+        for(var i = 0; i < clientArr.length; i++)
+        {
+          var item = document.createElement('li');
+          item.textContent = clientArr[i];
+          people.appendChild(item);
+        }
+    });
 
     // note that redux's 'compose' function is just being used as a general utility to make
     // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
@@ -61,20 +93,14 @@ export default appTarget => {
         // Warn before navigating away
         window.onbeforeunload = () => true;
     }
-
-    var socket = io("http://localhost:8000/", {
-        withCredentials: true,
-        extraHeaders: {
-          "my-custom-header": "abcd"
-        }
-      });
-
      
 
-    ReactDOM.render(
-        // important: this is checking whether `simulateScratchDesktop` is truthy, not just defined!
-        simulateScratchDesktop ?
-            <WrappedGui
+   return simulateScratchDesktop ?
+            <div>
+                <h1 id="title"></h1>
+                <ul id="people_list"></ul>
+                <div style = {{height:"100vh"}}>
+                <WrappedGui
                 canEditTitle
                 isScratchDesktop
                 showTelemetryModal
@@ -82,14 +108,19 @@ export default appTarget => {
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
-            /> :
-            <WrappedGui
+            />
+            </div></div> :
+            <div>
+                <h1 id="title"></h1>
+                <ul id="people_list"></ul>
+                <div style = {{height:"100vh"}}><WrappedGui
                 canEditTitle
                 backpackVisible
                 showComingSoon
                 backpackHost={backpackHost}
                 canSave={false}
                 onClickLogo={onClickLogo}
-            />,
-        appTarget);
+            /></div></div>;
 };
+
+export default Project;

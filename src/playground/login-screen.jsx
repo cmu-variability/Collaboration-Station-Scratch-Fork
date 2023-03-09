@@ -6,10 +6,7 @@ import AppStateHOC from '../lib/app-state-hoc.jsx';
 import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
 import log from '../lib/log.js';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Project from "./mainScene.jsx";
-import Login from "./login-screen.jsx";
-
+import { Link } from "react-router-dom";
 
 
 const onClickLogo = () => {
@@ -28,18 +25,14 @@ const handleTelemetryModalOptOut = () => {
     log('User opted out of telemetry');
 };
 
-const onClickSubmit = () =>
-{
 
-}
 
 /*
  * Render the GUI playground. This is a separate function because importing anything
  * that instantiates the VM causes unsupported browsers to crash
  * {object} appTarget - the DOM element to render to
  */
-export default appTarget => {
-    GUI.setAppElement(appTarget);
+const Login = () => {
 
     // note that redux's 'compose' function is just being used as a general utility to make
     // the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
@@ -48,6 +41,8 @@ export default appTarget => {
         AppStateHOC,
         HashParserHOC
     )(GUI);
+
+
 
     // TODO a hack for testing the backpack, allow backpack host to be set by url param
     const backpackHostMatches = window.location.href.match(/[?&]backpack_host=([^&]*)&?/);
@@ -71,19 +66,16 @@ export default appTarget => {
         window.onbeforeunload = () => true;
     }
 
+    const handleClick = () => {
+        let studentID = document.getElementById("StudentID").text;
+        window.open(`environment?id=${studentID}`); 
 
-
-
-     
-
-    ReactDOM.render(
-        <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />}>
-        </Route>
-        <Route path="/environment" element={<Project />}>
-        </Route>
-      </Routes>
-    </BrowserRouter>,
-        appTarget);
+    }
+   return <div>
+        <h3>Student ID</h3>
+        <input type="text" id= "StudentID"></input>
+        <button onClick={handleClick}>aaa</button>
+        <Link to="environment?id=a" className="btn btn-primary">Sign In</Link>
+        </div>
 };
+export default Login;
