@@ -42,8 +42,8 @@ const Project = () => {
         }
       });
 
-    const [searchParams] = useSearchParams();
-    let room = searchParams.get("id");
+    // const [searchParams] = useSearchParams();
+    // let room = searchParams.get("id");
 
     socket.emit('joinRoom', room);
     socket.emit('requestRoom');

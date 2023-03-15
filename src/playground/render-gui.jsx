@@ -81,7 +81,7 @@ export default appTarget => {
       <Routes>
         <Route path="/" element={<Login />}>
         </Route>
-        <Route path="/environment" element={<Project />}>
+        <Route path="/environment/:id" element={<Project />}>
         </Route>
       </Routes>
     </BrowserRouter>,

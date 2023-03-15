@@ -68,6 +68,7 @@ const Login = () => {
 
     const handleClick = () => {
         let studentID = document.getElementById("StudentID").text;
+        
         window.open(`environment?id=${studentID}`); 
 
     }
