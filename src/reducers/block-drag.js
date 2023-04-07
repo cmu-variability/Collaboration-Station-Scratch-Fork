@@ -12,7 +12,9 @@ const reducer = function (state, action) {
     }
 };
 
+// TO EDIT!!
 const updateBlockDrag = function (areBlocksOverGui) {
+    
     return {
         type: BLOCK_DRAG_UPDATE,
         areBlocksOverGui: areBlocksOverGui,

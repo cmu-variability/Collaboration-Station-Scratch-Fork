@@ -5,6 +5,8 @@ import {defineMessages, intlShape, injectIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import log from '../lib/log';
 import sharedMessages from './shared-messages';
+import Load from "../lib/Firebase";
+import { useCookies } from 'react-cookie';
 
 import {
     LoadingStates,
@@ -52,12 +54,30 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 'onload',
                 'removeFileObjects'
             ]);
+
+            this.hasRendered = false;
+        }
+
+        componentDidMount()
+        {
+            if (!this.hasRendered)
+            {
+                this.handleStartSelectingFileUpload();
+                this.hasRendered = true;
+            }
         }
         componentDidUpdate (prevProps) {
             if (this.props.isLoadingUpload && !prevProps.isLoadingUpload) {
                 this.handleFinishedLoadingUpload(); // cue step 5 below
             }
+
+            
+
+
+
         }
+
+        
         componentWillUnmount () {
             this.removeFileObjects();
         }
@@ -74,15 +94,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             // create fileReader
             this.fileReader = new FileReader();
             this.fileReader.onload = this.onload;
-            // create <input> element and add it to DOM
-            this.inputElement = document.createElement('input');
-            this.inputElement.accept = '.sb,.sb2,.sb3';
-            this.inputElement.style = 'display: none;';
-            this.inputElement.type = 'file';
-            this.inputElement.onchange = this.handleChange; // connects to step 3
-            document.body.appendChild(this.inputElement);
-            // simulate a click to open file chooser dialog
-            this.inputElement.click();
+
+            Load(this.handleChange, 'SampleProj.sb3');
         }
         // step 3: user has picked a file using the file chooser dialog.
         // We don't actually load the file here, we only decide whether to do so.
@@ -94,10 +107,10 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 projectChanged,
                 userOwnsProject
             } = this.props;
-            const thisFileInput = e.target;
-            if (thisFileInput.files) { // Don't attempt to load if no file was selected
-                this.fileToUpload = thisFileInput.files[0];
 
+
+                this.fileToUpload = e;
+                
                 // If user owns the project, or user has changed the project,
                 // we must confirm with the user that they really intend to
                 // replace it. (If they don't own the project and haven't
@@ -116,7 +129,6 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                     this.removeFileObjects();
                 }
                 this.props.closeFileMenu();
-            }
         }
         // step 4 is below, in mapDispatchToProps
 

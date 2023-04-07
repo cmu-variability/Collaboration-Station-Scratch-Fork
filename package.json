@@ -4,7 +4,7 @@
   "description": "Graphical User Interface for creating and running Scratch 3.0 projects",
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
-  "homepage": "https://cmu-variability.github.io/CollaborationStationServer",
+  "homepage": "https://eamspoker.github.io/sample-app2",
   "repository": {
     "type": "git",
     "url": "https://github.com/cmu-variability/Collaboration-Station-Scratch-Fork.git"
@@ -45,6 +45,7 @@
     "es6-object-assign": "1.1.0",
     "express": "^4.18.2",
     "file-loader": "2.0.0",
+    "firebase": "^9.19.1",
     "get-float-time-domain-data": "0.1.0",
     "get-user-media-promise": "1.1.4",
     "immutable": "3.8.2",
@@ -67,6 +68,7 @@
     "raw-loader": "^0.5.1",
     "react": "^16.0.0",
     "react-contextmenu": "2.9.4",
+    "react-cookie": "^4.1.1",
     "react-dom": "^16.0.0",
     "react-draggable": "3.0.5",
     "react-ga": "2.5.3",

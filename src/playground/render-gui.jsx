@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {compose} from 'redux';
-
+import { CookiesProvider } from "react-cookie";
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import GUI from '../containers/gui.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
@@ -77,13 +77,6 @@ export default appTarget => {
      
 
     ReactDOM.render(
-        <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />}>
-        </Route>
-        <Route path="/environment/:id" element={<Project />}>
-        </Route>
-      </Routes>
-    </BrowserRouter>,
+        <CookiesProvider><Project/></CookiesProvider>,
         appTarget);
 };
