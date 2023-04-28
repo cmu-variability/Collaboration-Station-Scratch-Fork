@@ -1,3 +1,11 @@
+#### This is a version of the scratch-gui repository built for Carnegie Mellon University's Collaboration Station.
+## Notes
+To deploy to GitHub pages:
+```bash
+npm run deploy
+```
+
+FROM ORIGINAL DOCUMENTATION:
 # scratch-gui
 #### Scratch GUI is a set of React components that comprise the interface for creating and running Scratch 3.0 projects
 
