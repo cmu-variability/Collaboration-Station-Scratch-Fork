@@ -8,14 +8,9 @@ const { getFirestore, Timestamp, FieldValue, doc, setDoc } = require('firebase/f
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Add in config from Collaboration Station Repository
 const firebaseConfig = {
-  apiKey: "AIzaSyDvupYEDXcSgdKi4-X8nJiSsGiIMMNroo8",
-  authDomain: "collaborationstation-88099.firebaseapp.com",
-  projectId: "collaborationstation-88099",
-  storageBucket: "gs://collaborationstation-88099.appspot.com",
-  messagingSenderId: "197913455317",
-  appId: "1:197913455317:web:6b1c01dd6832ed0f47505c",
-  measurementId: "G-KGTBB5ZE3H"
+
 };
 
 // Initialize Firebase

@@ -11,7 +11,6 @@ import Project from "./mainScene.jsx";
 import Login from "./login-screen.jsx";
 
 
-
 const onClickLogo = () => {
     window.location = 'https://scratch.mit.edu';
 };
@@ -77,6 +76,6 @@ export default appTarget => {
      
 
     ReactDOM.render(
-        <CookiesProvider><Project/></CookiesProvider>,
+      <Project></Project>,
         appTarget);
 };

@@ -95,7 +95,10 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             this.fileReader = new FileReader();
             this.fileReader.onload = this.onload;
 
-            Load(this.handleChange, 'SampleProj.sb3');
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            let filename = urlParams.has("id") ? 'Proj'+urlParams.get("id") +'.sb3' : 'SampleProj.sb3';
+            Load(this.handleChange, 'Proj'+urlParams.get("id") +'.sb3');
         }
         // step 3: user has picked a file using the file chooser dialog.
         // We don't actually load the file here, we only decide whether to do so.

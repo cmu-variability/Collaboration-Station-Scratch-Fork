@@ -68,10 +68,7 @@ const Project = () => {
      
 
    return simulateScratchDesktop ?
-            <div>
-                <h1 id="title"></h1>
-                <ul id="people_list"></ul>
-                <div style = {{height:"100vh"}}>
+          
                 <WrappedGui
                 canEditTitle
                 isScratchDesktop
@@ -80,19 +77,15 @@ const Project = () => {
                 onTelemetryModalCancel={handleTelemetryModalCancel}
                 onTelemetryModalOptIn={handleTelemetryModalOptIn}
                 onTelemetryModalOptOut={handleTelemetryModalOptOut}
-            />
-            </div></div> :
-            <div>
-                <h1 id="title"></h1>
-                <ul id="people_list"></ul>
-                <div style = {{height:"100vh"}}><WrappedGui
+            />:
+            <WrappedGui
                 canEditTitle
                 backpackVisible
                 showComingSoon
                 backpackHost={backpackHost}
                 canSave={false}
                 onClickLogo={onClickLogo}
-            /></div></div>;
+            />;
 };
 
 export default Project;
